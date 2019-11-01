@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		A4115322236B507B0043DEA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4115321236B507B0043DEA4 /* AppDelegate.swift */; };
-		A4115324236B507B0043DEA4 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A4115323236B507B0043DEA4 /* art.scnassets */; };
 		A4115326236B507B0043DEA4 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4115325236B507B0043DEA4 /* GameViewController.swift */; };
 		A4115329236B507B0043DEA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4115327236B507B0043DEA4 /* Main.storyboard */; };
 		A411532B236B507D0043DEA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A411532A236B507D0043DEA4 /* Assets.xcassets */; };
 		A411532E236B507D0043DEA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A411532C236B507D0043DEA4 /* LaunchScreen.storyboard */; };
+		A490F36F236CA78400B9326F /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A490F36E236CA78400B9326F /* GameManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A411531E236B507B0043DEA4 /* Conway's-Game-of-Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Conway's-Game-of-Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4115321236B507B0043DEA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A4115323236B507B0043DEA4 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		A4115325236B507B0043DEA4 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		A4115328236B507B0043DEA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A411532A236B507D0043DEA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A411532D236B507D0043DEA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A411532F236B507D0043DEA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A490F36E236CA78400B9326F /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,12 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				A4115321236B507B0043DEA4 /* AppDelegate.swift */,
-				A4115323236B507B0043DEA4 /* art.scnassets */,
 				A4115325236B507B0043DEA4 /* GameViewController.swift */,
 				A4115327236B507B0043DEA4 /* Main.storyboard */,
 				A411532A236B507D0043DEA4 /* Assets.xcassets */,
 				A411532C236B507D0043DEA4 /* LaunchScreen.storyboard */,
 				A411532F236B507D0043DEA4 /* Info.plist */,
+				A490F36E236CA78400B9326F /* GameManager.swift */,
 			);
 			path = "Conway's-Game-of-Life";
 			sourceTree = "<group>";
@@ -125,7 +125,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4115324236B507B0043DEA4 /* art.scnassets in Resources */,
 				A411532E236B507D0043DEA4 /* LaunchScreen.storyboard in Resources */,
 				A411532B236B507D0043DEA4 /* Assets.xcassets in Resources */,
 				A4115329236B507B0043DEA4 /* Main.storyboard in Resources */,
@@ -140,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4115326236B507B0043DEA4 /* GameViewController.swift in Sources */,
+				A490F36F236CA78400B9326F /* GameManager.swift in Sources */,
 				A4115322236B507B0043DEA4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

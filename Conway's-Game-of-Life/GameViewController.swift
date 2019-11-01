@@ -11,95 +11,36 @@ import QuartzCore
 import SceneKit
 
 class GameViewController: UIViewController {
+    
+    var sceneView: SCNView!
+    var scene: SCNScene!
+    var cameraNode: SCNNode!
+    var boxArray: [[SCNNode]] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // create and add a camera to the scene
-        let cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        scene.rootNode.addChildNode(cameraNode)
-        
-        // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
-        
-        // create and add a light to the scene
-        let lightNode = SCNNode()
-        lightNode.light = SCNLight()
-        lightNode.light!.type = .omni
-        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-        scene.rootNode.addChildNode(lightNode)
-        
-        // create and add an ambient light to the scene
-        let ambientLightNode = SCNNode()
-        ambientLightNode.light = SCNLight()
-        ambientLightNode.light!.type = .ambient
-        ambientLightNode.light!.color = UIColor.darkGray
-        scene.rootNode.addChildNode(ambientLightNode)
-        
-        // retrieve the ship node
-        let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
-        
-        // animate the 3d object
-        ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-        
-        // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
-        // set the scene to the view
-        scnView.scene = scene
-        
-        // allows the user to manipulate the camera
-        scnView.allowsCameraControl = true
-        
-        // show statistics such as fps and timing information
-        scnView.showsStatistics = true
-        
-        // configure the view
-        scnView.backgroundColor = UIColor.black
-        
-        // add a tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        scnView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc
-    func handleTap(_ gestureRecognize: UIGestureRecognizer) {
-        // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
-        // check what nodes are tapped
-        let p = gestureRecognize.location(in: scnView)
-        let hitResults = scnView.hitTest(p, options: [:])
-        // check that we clicked on at least one object
-        if hitResults.count > 0 {
-            // retrieved the first clicked object
-            let result = hitResults[0]
-            
-            // get its material
-            let material = result.node.geometry!.firstMaterial!
-            
-            // highlight it
-            SCNTransaction.begin()
-            SCNTransaction.animationDuration = 0.5
-            
-            // on completion - unhighlight
-            SCNTransaction.completionBlock = {
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.5
-                
-                material.emission.contents = UIColor.black
-                
-                SCNTransaction.commit()
+        setupView()
+        setupScene()
+        setupCamera()
+        for y in 0...16 {
+            var line: [SCNNode] = []
+            for x in 0...16 {
+                let material = SCNMaterial()
+                material.diffuse.contents = UIColor.white
+                let geometry: SCNGeometry
+                geometry = SCNBox(width: 0.8, height: 0.8, length: 0, chamferRadius: 0)
+                geometry.firstMaterial = material
+                let geometryNode = SCNNode(geometry: geometry)
+                geometryNode.position.x = Float(x)
+                geometryNode.position.y = Float(-y)
+                scene.rootNode.addChildNode(geometryNode)
+                line.append(geometryNode)
             }
-            
-            material.emission.contents = UIColor.red
-            
-            SCNTransaction.commit()
+            boxArray.append(line)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(nextIteration(_:)))
+        sceneView.addGestureRecognizer(tapGesture)
     }
     
     override var shouldAutorotate: Bool {
@@ -110,12 +51,79 @@ class GameViewController: UIViewController {
         return true
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+    @objc func nextIteration(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        
+        guard let view = self.view as? SCNView else { return }
+        
+        let location = gestureRecognizer.location(in: view)
+        let hitResults = view.hitTest(location, options: [:])
+        
+        if hitResults.count > 0 {
+            let result = hitResults[0]
+            guard let material = result.node.geometry?.firstMaterial else { return }
+            material.diffuse.contents = UIColor.red
+            for x in 0..<boxArray.count {
+                for y in 0..<boxArray[0].count {
+                    if boxArray[x][y] == result.node {
+                        if GameManager.shared.grid[x][y] {
+                            GameManager.shared.grid[x][y] = false
+                            for i in 0..<GameManager.shared.survivors.count {
+                                if GameManager.shared.survivors[i] == (x,y) {
+                                    boxArray[x][y].geometry?.firstMaterial?.diffuse.contents = UIColor.white
+                                    GameManager.shared.survivors.remove(at: i)
+                                }
+                            }
+                        } else {
+                            GameManager.shared.grid[x][y] = true
+                            GameManager.shared.survivors.append((x,y))
+                        }
+                    }
+                }
+            }
         } else {
-            return .all
+            GameManager.shared.gameLoop()
+            setNewGrid(survivors: GameManager.shared.survivors, dead: GameManager.shared.dead)
+            GameManager.shared.clearGenerationArray()
         }
+        
+    }
+    
+    func setupView() {
+        sceneView = self.view as! SCNView
+        sceneView.backgroundColor = .black
+        sceneView.showsStatistics = true
+        sceneView.allowsCameraControl = false
+        sceneView.autoenablesDefaultLighting = true
+    }
+    
+    func setNewGrid(survivors: [(Int,Int)], dead: [(Int,Int)] ) {
+        for i in survivors {
+            boxArray[i.0][i.1].geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        }
+        for j in dead {
+            boxArray[j.0][j.1].geometry?.firstMaterial?.diffuse.contents = UIColor.white
+        }
+    }
+    
+    func setupScene() {
+        scene = SCNScene()
+        sceneView.scene = scene
+    }
+    
+    func setupCamera() {
+        cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = SCNVector3(8, -7, 35)
+        scene.rootNode.addChildNode(cameraNode)
+    }
+    
+    func spawnBox() -> SCNNode {
+        var geometry: SCNGeometry
+        geometry = SCNBox(width: 0.6, height: 0.6, length: 0.6, chamferRadius: 0)
+        let geometryNode = SCNNode(geometry: geometry)
+        scene.rootNode.addChildNode(geometryNode)
+        return geometryNode
     }
 
 }
