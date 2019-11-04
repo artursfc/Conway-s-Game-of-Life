@@ -11,7 +11,6 @@ import Foundation
 
 final class GameManager {
     private init() {
-        
     }
     
     static let shared = GameManager()
@@ -19,24 +18,6 @@ final class GameManager {
     public var grid: [[Bool]] = Array(repeating: Array(repeating: false, count: 16), count:16)
     public var survivors: [(Int, Int)] = []
     public var dead: [(Int, Int)] = []
-
-    func start() {
-        spawnBeing(row: 8, column: 8)
-        spawnBeing(row: 7, column: 8)
-        spawnBeing(row: 8, column: 9)
-        spawnBeing(row: 8, column: 7)
-        spawnBeing(row: 9, column: 7)
-        spawnBeing(row: 9, column: 9)
-        spawnBeing(row: 10, column: 8)
-        survivors.append((8,8))
-        survivors.append((7,8))
-        survivors.append((8,9))
-        survivors.append((8,7))
-        survivors.append((8,8))
-        survivors.append((9,7))
-        survivors.append((9,9))
-        survivors.append((10,8))
-    }
 
     func round(row: Int, column: Int) {
         let amountOfNeighbours: Int = checkNeighbours(row: row, column: column)
@@ -58,7 +39,6 @@ final class GameManager {
             }
         }
         setNewGrid(survivors: survivors, dead: dead)
-        print(grid)
     }
 
     func setNewGrid(survivors: [(Int,Int)], dead: [(Int,Int)] ) {
@@ -102,3 +82,4 @@ final class GameManager {
 
 
 }
+
