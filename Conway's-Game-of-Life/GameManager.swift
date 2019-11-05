@@ -10,16 +10,22 @@ import Foundation
 
 
 final class GameManager {
-    private init() {
+    
+    // MARK: init
+    
+    public required init() {
+        grid = Array(repeating: Array(repeating: false, count: 16), count:16)
+        survivors = []
+        dead = []
     }
     
-    static let shared = GameManager()
+    // MARK: Variables
     
-    public var grid: [[Bool]] = Array(repeating: Array(repeating: false, count: 16), count:16)
-    public var survivors: [(Int, Int)] = []
-    public var dead: [(Int, Int)] = []
+    public var grid: [[Bool]]
+    public var survivors: [(Int, Int)]
+    public var dead: [(Int, Int)]
 
-    func round(row: Int, column: Int) {
+    private func round(row: Int, column: Int) {
         let amountOfNeighbours: Int = checkNeighbours(row: row, column: column)
         if amountOfNeighbours < 2 {
             dead.append((row,column))
@@ -31,8 +37,10 @@ final class GameManager {
             dead.append((row, column))
         }
     }
+    
+    // MARK: Game Logic
 
-    func gameLoop() {
+    public func gameLoop() {
         for i in 0..<grid.count {
             for j in 0..<grid[0].count {
                 round(row: i, column: j)
@@ -41,7 +49,7 @@ final class GameManager {
         setNewGrid(survivors: survivors, dead: dead)
     }
 
-    func setNewGrid(survivors: [(Int,Int)], dead: [(Int,Int)] ) {
+    private func setNewGrid(survivors: [(Int,Int)], dead: [(Int,Int)] ) {
         for i in survivors {
             grid[i.0][i.1] = true
         }
@@ -50,12 +58,12 @@ final class GameManager {
         }
     }
 
-    func clearGenerationArray() {
+    public func clearGenerationArray() {
         survivors.removeAll(keepingCapacity: false)
         dead.removeAll(keepingCapacity: false)
     }
 
-    func checkNeighbours(row: Int, column: Int) -> Int {
+    private func checkNeighbours(row: Int, column: Int) -> Int {
         let maxRow = grid.count - 1
         var numberOfNeighbours = 0
         if (maxRow > 0) {
@@ -66,7 +74,7 @@ final class GameManager {
             for x in x...min(row + 1, maxRow) {
                 for y in y...min(column + 1, maxColumn) {
                     if (x != row || y != column) {
-                        if (grid[x][y] == true) {
+                        if grid[x][y] {
                              numberOfNeighbours += 1
                         }
                     }
@@ -76,7 +84,7 @@ final class GameManager {
         return numberOfNeighbours
     }
 
-    func spawnBeing(row: Int, column: Int ) {
+    private func spawnBeing(row: Int, column: Int ) {
         grid[row][column] = true
     }
 
