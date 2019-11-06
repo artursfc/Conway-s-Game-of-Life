@@ -20,7 +20,10 @@ class TabBarViewController: UITabBarController {
         let silverViewController = SilverViewController()
         silverViewController.tabBarItem = UITabBarItem(title: "Silver", image: nil, tag: 1)
         
+        let goldViewController = GoldViewController()
+        goldViewController.tabBarItem = UITabBarItem(title: "Gold", image: nil, tag: 2)
         
-        self.viewControllers = [bronzeViewController, silverViewController]
+        
+        self.viewControllers = [bronzeViewController, silverViewController, goldViewController]
     }
 }

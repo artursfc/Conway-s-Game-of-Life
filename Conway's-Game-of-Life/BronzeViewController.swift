@@ -33,7 +33,7 @@ class  BronzeViewController: UIViewController, SCNSceneRendererDelegate {
     }()
     
     private var timeInterval: TimeInterval = 0
-    private let timeConstant: TimeInterval  = 0.5
+    private let timeConstant: TimeInterval  = 0.1
     
     private let gameManager: GameManager
     
@@ -91,7 +91,7 @@ class  BronzeViewController: UIViewController, SCNSceneRendererDelegate {
     }
     
     private func setupPlayButton() {
-        playButton.backgroundColor = .red
+        playButton.backgroundColor = .systemRed
         playButton.layer.cornerRadius = 10
         playButton.setTitle("PLAY", for: .normal)
         playButton.setTitle("STOP", for: .selected)
@@ -137,7 +137,7 @@ class  BronzeViewController: UIViewController, SCNSceneRendererDelegate {
     
     @objc public func startGameLoop() {
         if sceneView.isPlaying {
-            playButton.backgroundColor = .red
+            playButton.backgroundColor = .systemRed
             playButton.isSelected = false
             timeInterval = 0
             sceneView.isPlaying = false
@@ -160,7 +160,7 @@ class  BronzeViewController: UIViewController, SCNSceneRendererDelegate {
         if hitResults.count > 0 {
             let result = hitResults[0]
             guard let material = result.node.geometry?.firstMaterial else { return }
-            material.diffuse.contents = UIColor.red
+            material.diffuse.contents = UIColor.systemRed
             for x in 0..<boxArray.count {
                 for y in 0..<boxArray[0].count {
                     if boxArray[x][y] == result.node {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A40C040C23732D00004A70AD /* GoldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40C040B23732D00004A70AD /* GoldViewController.swift */; };
 		A4115322236B507B0043DEA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4115321236B507B0043DEA4 /* AppDelegate.swift */; };
 		A4115326236B507B0043DEA4 /* BronzeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4115325236B507B0043DEA4 /* BronzeViewController.swift */; };
 		A411532B236B507D0043DEA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A411532A236B507D0043DEA4 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A40C040B23732D00004A70AD /* GoldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldViewController.swift; sourceTree = "<group>"; };
 		A411531E236B507B0043DEA4 /* Conway's-Game-of-Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Conway's-Game-of-Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4115321236B507B0043DEA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4115325236B507B0043DEA4 /* BronzeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BronzeViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				A4332E63236CC6F5006D26B0 /* TabBarViewController.swift */,
 				A416412B23708F3300C73BB1 /* SilverViewController.swift */,
 				A4F1438D2371E9E200F0A44D /* Constants.swift */,
+				A40C040B23732D00004A70AD /* GoldViewController.swift */,
 			);
 			path = "Conway's-Game-of-Life";
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 				A4115326236B507B0043DEA4 /* BronzeViewController.swift in Sources */,
 				A490F36F236CA78400B9326F /* GameManager.swift in Sources */,
 				A4115322236B507B0043DEA4 /* AppDelegate.swift in Sources */,
+				A40C040C23732D00004A70AD /* GoldViewController.swift in Sources */,
 				A4F1438E2371E9E200F0A44D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

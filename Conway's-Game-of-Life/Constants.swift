@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-private let colorArray: [UIColor] = [.red, .yellow, .blue, .magenta, .cyan, .orange, .green]
+private let colorArray: [UIColor] = [.systemRed, .systemYellow, .systemBlue, .systemPurple, .systemGreen, .systemOrange, .systemTeal]
 
 public func randomUIColor() -> UIColor {
-    return colorArray[Int.random(in: 0..<colorArray.count-1)]
+    return colorArray[Int.random(in: 0..<colorArray.count)]
 }

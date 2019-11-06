@@ -1,5 +1,5 @@
 //
-//  SilverViewController.swift
+//  GoldViewController.swift
 //  Conway's-Game-of-Life
 //
 //  Created by Artur Carneiro on 04/11/19.
@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import SceneKit
 
-class SilverViewController: UIViewController, SCNSceneRendererDelegate {
+class GoldViewController: UIViewController, SCNSceneRendererDelegate {
     
     // MARK: Variables
     
@@ -142,6 +142,10 @@ class SilverViewController: UIViewController, SCNSceneRendererDelegate {
             box.geometry?.firstMaterial?.diffuse.contents = randomUIColor()
             box.position = boxArray[i.0][i.1].position
             box.position.z = floor
+            let omni = SCNLight()
+            omni.type = .omni
+            omni.color = randomUIColor()
+            box.light = omni
             boxBank.append(box)
         }
         for j in dead {
@@ -203,7 +207,6 @@ class SilverViewController: UIViewController, SCNSceneRendererDelegate {
                 }
             }
         }
-        
     }
     
     // MARK: Renderer
@@ -222,4 +225,3 @@ class SilverViewController: UIViewController, SCNSceneRendererDelegate {
     }
 
 }
-

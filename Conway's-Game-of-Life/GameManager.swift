@@ -87,6 +87,10 @@ final class GameManager {
     private func spawnBeing(row: Int, column: Int ) {
         grid[row][column] = true
     }
+    
+    public func resetGrid() {
+        grid = Array(repeating: Array(repeating: false, count: 16), count:16)
+    }
 
 
 }
