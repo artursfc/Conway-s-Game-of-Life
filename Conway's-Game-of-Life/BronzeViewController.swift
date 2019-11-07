@@ -75,7 +75,7 @@ class  BronzeViewController: UIViewController, SCNSceneRendererDelegate {
         sceneView.frame = self.view.frame
         self.view = sceneView
         sceneView.backgroundColor = .black
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         sceneView.allowsCameraControl = false
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self

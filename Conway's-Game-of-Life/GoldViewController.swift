@@ -39,6 +39,9 @@ class GoldViewController: UIViewController, SCNSceneRendererDelegate {
     private let gameManager: GameManager
     private var boxBank: [SCNNode] = []
     
+    private let letterArr: [String] = ["M","O","B","P","S","Y","C","H","O","1","0","0","I","S","T","H","E","B","E","S","T"]
+    private let mob: String = "MOB"
+    
     // MARK: init
     
     init() {
@@ -77,7 +80,7 @@ class GoldViewController: UIViewController, SCNSceneRendererDelegate {
         sceneView.frame = self.view.frame
         self.view = sceneView
         sceneView.backgroundColor = .black
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         sceneView.allowsCameraControl = true
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
@@ -128,24 +131,33 @@ class GoldViewController: UIViewController, SCNSceneRendererDelegate {
     
     // MARK: Game Logic
     
-    private func spawnBox() -> SCNNode {
-        var geometry: SCNGeometry
-        geometry = SCNBox(width: 0.6, height: 0.6, length: 0.6, chamferRadius: 0)
+    private func spawnObject(letter: String) -> SCNNode {
+        let geometry: SCNGeometry
+        geometry = SCNText(string: letter, extrusionDepth: 0)
         let geometryNode = SCNNode(geometry: geometry)
+        geometryNode.scale = SCNVector3Make(0.1, 0.1, 0.1)
         scene.rootNode.addChildNode(geometryNode)
         return geometryNode
     }
     
     private func setNewGrid(survivors: [(Int,Int)], dead: [(Int,Int)] ) {
         for i in survivors {
-            let box = spawnBox()
+            let box = spawnObject(letter: mob)
             box.geometry?.firstMaterial?.diffuse.contents = randomUIColor()
             box.position = boxArray[i.0][i.1].position
             box.position.z = floor
-            let omni = SCNLight()
-            omni.type = .omni
-            omni.color = randomUIColor()
-            box.light = omni
+            
+            let action = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(Double(i.0),Double(i.1),0.0), duration: 0.5))
+            box.runAction(action)
+            
+            let light = SCNLight()
+            light.type = .spot
+            light.drawsArea = true
+            light.intensity = 1000
+            light.spotOuterAngle = 120
+            light.color = randomUIColor()
+            box.light = light
+            
             boxBank.append(box)
         }
         for j in dead {

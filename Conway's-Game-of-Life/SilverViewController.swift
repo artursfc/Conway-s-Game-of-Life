@@ -77,7 +77,7 @@ class SilverViewController: UIViewController, SCNSceneRendererDelegate {
         sceneView.frame = self.view.frame
         self.view = sceneView
         sceneView.backgroundColor = .black
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         sceneView.allowsCameraControl = true
         sceneView.autoenablesDefaultLighting = true
         sceneView.delegate = self
